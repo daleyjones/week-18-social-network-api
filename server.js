@@ -1,22 +1,28 @@
+// importing the express module for creating a server
 const express = require('express');
+
+// importing the db module to connect to the database
 const db = require('./config/connection');
-const mongoose = require('mongoose');
 
+// importing the routes module for handling API routes
+const routes = require('./routes');
+
+// setting the port number for the server
+const PORT = 3001;
+
+// creating an instance of the express application
 const app = express();
-const PORT = process.env.PORT || 3001;
 
-
-app.use(express.json());
+// configuring the middleware to parse URL-encoded and JSON request bodies
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static('public'));
-app.use(require("./routes"));
+app.use(express.json());
 
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/week-18-social-network-api', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
+// attaching the routes middleware to the application
+app.use(routes);
+
+// establishing a database connection and strating up the server
+db.once('open', () => {
+    app.listen(PORT, () => {
+        console.log(`API server is running on port ${PORT}!`);
+    });
 });
-
-
-
-
-app.listen(PORT, () => console.log(` Connected on localhost:${PORT}`));
