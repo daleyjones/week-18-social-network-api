@@ -3,6 +3,7 @@ const apiRoutes = require('./api');
 
 router.use('/api', apiRoutes);
 
-router.use((req, res) => res.send('Wrong route!'));
+// This middleware will catch any requests that don't match the above routes
+router.use((req, res) => res.status(404).send('Wrong route!'));
 
 module.exports = router;
