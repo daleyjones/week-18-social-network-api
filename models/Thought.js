@@ -1,6 +1,6 @@
 const { Schema, model } = require('mongoose');
 const reactionSchema = require('./Reaction');
-const { formatDate } = require('./../utils/formateDate.js');
+const { formatDate } = require('./../utils/formatDate.js');
 
 const thoughtSchema = new Schema(
   {
