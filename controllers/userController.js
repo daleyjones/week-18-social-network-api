@@ -34,18 +34,21 @@ const UserController = {
      
       deleteUser(req, res) {
         User.findOneAndDelete({ _id: req.params.userId })
-          .then((user) =>
-            !user
-              ? res.status(404).json({ message: "No user with that ID exists" })
-              : Thought.deleteMany({ _id: { $in: user.thoughts } })
-          )
-          .then(() =>
-            res.json({
+          .then((user) => {
+            if (!user) {
+              return res.status(404).json({ message: "No user with that ID exists" });
+            }
+            // Deleted associated thoughts //
+            return Thought.deleteMany({ _id: { $in: user.thoughts } });
+          })
+          .then(() => {
+            return res.json({
               message: "User and associated thoughts have been deleted 🎉",
-            })
-          )
+            });
+          })
           .catch((err) => res.status(500).json(err));
-      },
+    },
+    
    
       updateUser(req, res) {
         User.findOneAndUpdate(
