@@ -1,6 +1,6 @@
 const { Schema, model } = require('mongoose');
 const reactionSchema = require('./Reaction');
-// const { formatDate } = require('./../utils/formatDate.js');
+
 
 const thoughtSchema = new Schema(
   {
@@ -34,7 +34,7 @@ const thoughtSchema = new Schema(
   }
 );
 
-// Create a virtual property `reactionCount` that gets the amount of reactions per thought
+
 thoughtSchema.virtual('reactionCount').get(function () {
   return this.reactions.length;
 });
