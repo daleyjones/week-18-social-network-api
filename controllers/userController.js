@@ -20,15 +20,19 @@ const UserController =  {
             .catch(err => res.status(500).json(err));
     },
     //update user by id
-     updateUserById(req, res) {
-        User.findOneAndUpdate(req.params.id, req.body, { new: true })
-            .then(userData => {
-                if (!userData) {
-                    return res.status(404).json({ message: 'User not found' });
-                }
-                res.json(userData);
-            })
-            .catch(err => res.status(500).json(err));
+    updateUserById(req, res) {
+      User.findOneAndUpdate(
+        { _id: req.params.userId }, // Corrected this line
+        req.body,
+        { new: true }
+      )
+        .then(userData => {
+          if (!userData) {
+            return res.status(404).json({ message: 'User not found' });
+          }
+          res.json(userData);
+        })
+        .catch(err => res.status(500).json(err));
     },
     //delete user by id
     deleteUserById(req, res) {
