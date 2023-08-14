@@ -11,7 +11,7 @@ const UserController = {
             res.status(500).json(err);
           });
       },
-      // Get a single user
+     
       getSingleUser(req, res) {
         User.findOne({ _id: req.params.userId })
           .select("-__v")
@@ -25,13 +25,13 @@ const UserController = {
             res.status(500).json(err);
           });
       },
-      // Create a new user
+      
       createUser(req, res) {
         User.create(req.body)
           .then((user) => res.json(user))
           .catch((err) => res.status(500).json(err));
       },
-      // Delete a user and associated thoughts
+     
       deleteUser(req, res) {
         User.findOneAndDelete({ _id: req.params.userId })
           .then((user) =>
@@ -46,7 +46,7 @@ const UserController = {
           )
           .catch((err) => res.status(500).json(err));
       },
-      // Update a user
+   
       updateUser(req, res) {
         User.findOneAndUpdate(
           { _id: req.params.userId },
@@ -63,7 +63,7 @@ const UserController = {
             res.status(500).json(err);
           });
       },
-      // Add friend to a user's friend list
+     
       addFriend(req, res) {
         User.findOneAndUpdate(
           { _id: req.params.userId },
@@ -83,7 +83,7 @@ const UserController = {
             res.status(500).json(err);
           });
       },
-      // Remove friend from a user's friend list
+      
       removeFriend(req, res) {
         User.findOneAndUpdate(
           { _id: req.params.userId },
