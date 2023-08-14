@@ -10,22 +10,22 @@ const thoughtController = {
       res.status(500).json(err);
     }
   },
-  
+
   // Get a Single Thought
   async getSingleThought(req, res) {
     try {
       const dbThoughtData = await Thought.findOne({ _id: req.params.thoughtId });
-      
+
       if (!dbThoughtData) {
         return res.status(404).json({ message: 'No Thought with that ID' });
       }
-      
+
       res.json(dbThoughtData);
     } catch (err) {
       res.status(500).json(err);
     }
   },
-  
+
   // Create a Thought
   async createThought(req, res) {
     try {
@@ -35,18 +35,23 @@ const thoughtController = {
         { $push: { thoughts: dbThoughtData._id } },
         { new: true }
       );
+
+      if (!dbUserData) {
+        return res.status(404).json({ message: 'Thought created but no user with that ID' });
+      }
+
       res.json(dbThoughtData);
     } catch (err) {
       console.error(err);
       res.status(500).json(err);
     }
   },
-  
+
   // Delete a Thought
   async deleteThought(req, res) {
     try {
       const deletedThought = await Thought.findOneAndDelete({ _id: req.params.thoughtId });
-      
+
       if (!deletedThought) {
         return res.status(404).json({ message: 'No Thought with that ID' });
       }
@@ -61,7 +66,7 @@ const thoughtController = {
       res.status(500).json(err);
     }
   },
-  
+
   // Update a Thought
   async updateThought(req, res) {
     try {

@@ -14,7 +14,7 @@ const userController = {
   // Get a Single User
   async getSingleUser(req, res) {
     try {
-      const dbUserData = await User.findOne({ _id: req.params.userId });
+      const dbUserData = await User.findOne({ _id: req.params.thoughtId });
 
       if (!dbUserData) {
         return res.status(404).json({ message: 'No User with that ID' });
@@ -40,7 +40,7 @@ const userController = {
   // Delete a User
   async deleteUser(req, res) {
     try {
-      const deletedUser = await User.findOneAndDelete({ _id: req.params.userId });
+      const deletedUser = await User.findOneAndDelete({ _id: req.params.thoughtId });
 
       if (!deletedUser) {
         return res.status(404).json({ message: 'No User with that ID' });
@@ -56,7 +56,7 @@ const userController = {
   async updateUser(req, res) {
     try {
       const updatedUser = await User.findOneAndUpdate(
-        { _id: req.params.userId },
+        { _id: req.params.thoughtId },
         { $set: req.body },
         { runValidators: true, new: true }
       );
